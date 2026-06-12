@@ -1,0 +1,273 @@
+.page-container {
+  min-height: 100vh;
+  padding: 24rpx;
+  background: #f5f5f5;
+}
+
+.form-card,
+.dish-card {
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+}
+
+.form-title {
+  margin-bottom: 24rpx;
+  color: #222222;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.form-image-preview {
+  display: block;
+  width: 260rpx;
+  height: 200rpx;
+  margin: 0 auto 18rpx;
+  border-radius: 14rpx;
+  background: #f2f2f2;
+}
+
+.choose-image-button {
+  height: 68rpx;
+  margin-bottom: 22rpx;
+  border-radius: 34rpx;
+  color: #1683ff;
+  font-size: 26rpx;
+  line-height: 68rpx;
+  background: #eef6ff;
+}
+
+.form-input {
+  height: 78rpx;
+  padding: 0 20rpx;
+  margin-bottom: 18rpx;
+  border-radius: 10rpx;
+  background: #f7f7f7;
+  font-size: 26rpx;
+}
+
+.category-picker {
+  height: 78rpx;
+  padding: 0 20rpx;
+  margin-bottom: 18rpx;
+  border-radius: 10rpx;
+  color: #333333;
+  font-size: 26rpx;
+  line-height: 78rpx;
+  background: #f7f7f7;
+}
+
+.category-picker--placeholder {
+  color: #999999;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 150rpx;
+  padding: 20rpx;
+  margin-bottom: 22rpx;
+  border-radius: 10rpx;
+  background: #f7f7f7;
+  font-size: 26rpx;
+}
+
+.options-textarea {
+  height: 210rpx;
+}
+
+.submit-button,
+.cancel-button {
+  height: 78rpx;
+  border-radius: 39rpx;
+  font-size: 28rpx;
+  line-height: 78rpx;
+}
+
+.submit-button {
+  color: #ffffff;
+  background: #ff6b35;
+}
+
+.cancel-button {
+  margin-top: 18rpx;
+  color: #666666;
+  background: #eeeeee;
+}
+
+.dish-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dish-thumbnail {
+  flex-shrink: 0;
+  width: 130rpx;
+  height: 130rpx;
+  margin-right: 20rpx;
+  border-radius: 12rpx;
+  background: #f2f2f2;
+}
+
+.dish-summary {
+  flex: 1;
+  min-width: 0;
+}
+
+.dish-name {
+  color: #222222;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.dish-category,
+.dish-description,
+.dish-options,
+.dish-status {
+  margin-top: 12rpx;
+  color: #666666;
+  font-size: 26rpx;
+}
+
+.dish-options {
+  line-height: 38rpx;
+  white-space: pre-line;
+}
+
+.dish-price {
+  color: #ff4d2e;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+  margin-top: 24rpx;
+}
+
+.small-button {
+  width: 120rpx;
+  height: 60rpx;
+  margin: 0;
+  border: 1rpx solid #dddddd;
+  border-radius: 30rpx;
+  color: #666666;
+  font-size: 24rpx;
+  line-height: 60rpx;
+  background: #ffffff;
+}
+
+.small-button--active {
+  border-color: #ff6b35;
+  color: #ffffff;
+  background: #ff6b35;
+}
+
+.delete-button {
+  color: #ffffff;
+  background: #d93025;
+}
+
+.empty {
+  padding: 100rpx 0;
+  color: #999999;
+  text-align: center;
+}
+
+/* Visual refresh */
+.page-container {
+  background: #f7f4ef;
+}
+
+.form-card,
+.dish-card {
+  border: 1rpx solid #f0e8e1;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(74, 55, 40, 0.06);
+}
+
+.form-card {
+  border-top: 7rpx solid #ff6b35;
+}
+
+.form-input,
+.category-picker,
+.form-textarea {
+  border: 1rpx solid #eee4dc;
+  border-radius: 14rpx;
+  background: #faf8f5;
+}
+
+.form-image-preview {
+  width: 300rpx;
+  height: 220rpx;
+  border: 4rpx solid #ffffff;
+  border-radius: 18rpx;
+  box-shadow: 0 8rpx 20rpx rgba(74, 55, 40, 0.12);
+}
+
+.choose-image-button {
+  color: #b45529;
+  background: #fff1e7;
+}
+
+.submit-button {
+  box-shadow: 0 8rpx 20rpx rgba(255, 107, 53, 0.2);
+}
+
+.dish-card--available {
+  border-left: 7rpx solid #2aa876;
+}
+
+.dish-card--soldOut {
+  border-left: 7rpx solid #e5a12a;
+}
+
+.dish-card--offShelf {
+  border-left: 7rpx solid #aaa39d;
+}
+
+.dish-thumbnail {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+}
+
+.dish-status {
+  display: inline-block;
+  padding: 7rpx 14rpx;
+  border-radius: 16rpx;
+  background: #f1eeeb;
+}
+
+.dish-status--available {
+  color: #187d55;
+  background: #eaf8f1;
+}
+
+.dish-status--soldOut {
+  color: #9a6513;
+  background: #fff4dc;
+}
+
+.dish-status--offShelf {
+  color: #77716c;
+  background: #efedeb;
+}
+
+.error-state {
+  color: #a84838;
+  background: #fff1ee;
+}
+
+.inline-error {
+  padding: 14rpx 18rpx;
+  margin-bottom: 18rpx;
+  border-radius: 14rpx;
+  color: #a84838;
+  font-size: 23rpx;
+  background: #fff1ee;
+}

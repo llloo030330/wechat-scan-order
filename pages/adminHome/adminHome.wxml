@@ -1,0 +1,28 @@
+<view class="page-container">
+  <view class="header-card">
+    <view class="title">商家后台</view>
+    <view class="message">{{message}}</view>
+  </view>
+
+  <view wx:if="{{checking}}" class="empty">正在验证管理员身份...</view>
+
+  <view wx:elif="{{authorized}}" class="menu-card">
+    <view class="menu-section-title">经营管理</view>
+    <view class="menu-grid">
+      <button class="menu-button menu-button--primary" bindtap="goToAdminOrders">订单管理</button>
+      <button class="menu-button menu-button--primary" bindtap="goToAdminStats">今日统计</button>
+      <button class="menu-button" bindtap="goToAdminDishes">菜品管理</button>
+      <button class="menu-button" bindtap="goToAdminCategories">分类管理</button>
+      <button class="menu-button" bindtap="goToAdminTables">餐桌管理</button>
+      <button class="menu-button" bindtap="goToAdminSettings">店铺设置</button>
+    </view>
+
+    <button class="logout-button" bindtap="logoutAdmin">退出商家后台</button>
+  </view>
+
+  <view wx:else class="unauthorized-card">
+    <view class="unauthorized-title">无管理员权限</view>
+    <view class="unauthorized-tip">当前微信用户不能进入商家后台。</view>
+    <button class="login-button" bindtap="checkAdmin">重新验证管理员身份</button>
+  </view>
+</view>

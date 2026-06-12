@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <rect width="240" height="240" rx="20" fill="#fff1e8"/>
+  <circle cx="120" cy="120" r="72" fill="#ffffff"/>
+  <circle cx="120" cy="120" r="48" fill="#ffb17f"/>
+  <path d="M76 58v124M64 58v42c0 18 24 18 24 0V58M178 58v124M160 58c0 26 36 26 36 0" fill="none" stroke="#ff6b35" stroke-width="9" stroke-linecap="round"/>
+  <text x="120" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#ffffff">MENU</text>
+</svg>

@@ -1,0 +1,273 @@
+.page-container {
+  min-height: 100vh;
+  padding: 24rpx;
+  background: #f5f5f5;
+}
+
+.order-card {
+  padding: 32rpx 28rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24rpx;
+}
+
+.table-label,
+.meta-row {
+  color: #999999;
+  font-size: 24rpx;
+}
+
+.table-no {
+  margin-top: 6rpx;
+  color: #222222;
+  font-size: 52rpx;
+  font-weight: bold;
+}
+
+.status {
+  padding: 10rpx 20rpx;
+  border-radius: 24rpx;
+  color: #ff6b35;
+  font-size: 28rpx;
+  font-weight: bold;
+  background: #fff3ed;
+}
+
+.status--making {
+  color: #236fa1;
+  background: #eaf5fd;
+}
+
+.status--completed {
+  color: #187d55;
+  background: #eaf8f1;
+}
+
+.status--canceled {
+  color: #77716c;
+  background: #efedeb;
+}
+
+.meta-row {
+  margin-top: 10rpx;
+}
+
+.section-title {
+  padding-top: 28rpx;
+  margin-top: 28rpx;
+  border-top: 1rpx solid #eeeeee;
+  color: #222222;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.info-row,
+.dish-row {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #eeeeee;
+}
+
+.info-row {
+  justify-content: space-between;
+}
+
+.label {
+  flex-shrink: 0;
+  margin-right: 30rpx;
+  color: #999999;
+}
+
+.remark {
+  text-align: right;
+}
+
+.dish-main {
+  flex: 1;
+}
+
+.dish-title-row {
+  display: flex;
+  align-items: center;
+}
+
+.dish-name {
+  flex: 1;
+  color: #333333;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.item-options,
+.item-remark {
+  margin-top: 6rpx;
+  color: #888888;
+  font-size: 23rpx;
+  line-height: 32rpx;
+}
+
+.item-remark {
+  color: #ff6b35;
+}
+
+.dish-count {
+  color: #999999;
+}
+
+.dish-subtotal {
+  margin-left: 20rpx;
+  color: #333333;
+  font-weight: bold;
+  text-align: right;
+}
+
+.dish-price {
+  margin-top: 8rpx;
+  color: #999999;
+  font-size: 23rpx;
+}
+
+.summary-card,
+.cancel-card {
+  padding: 20rpx;
+  margin-top: 24rpx;
+  border-radius: 12rpx;
+  background: #f8f8f8;
+}
+
+.cancel-card {
+  color: #d93025;
+  line-height: 42rpx;
+  background: #fff2f0;
+}
+
+.cancel-title {
+  margin-bottom: 6rpx;
+  font-weight: bold;
+}
+
+.total-price {
+  color: #ff4d2e;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.order-list-button {
+  height: 80rpx;
+  margin-top: 36rpx;
+  border-radius: 40rpx;
+  color: #ffffff;
+  font-size: 28rpx;
+  line-height: 80rpx;
+  background: #ff6b35;
+}
+
+.cancel-order-button {
+  height: 80rpx;
+  margin-top: 36rpx;
+  border: 1rpx solid #d93025;
+  border-radius: 40rpx;
+  color: #d93025;
+  font-size: 28rpx;
+  line-height: 78rpx;
+  background: #ffffff;
+}
+
+.cancel-order-button + .order-list-button {
+  margin-top: 18rpx;
+}
+
+.secondary-button {
+  color: #e95323;
+  background: #fff7f2;
+  box-shadow: none;
+}
+
+.empty {
+  padding-top: 200rpx;
+  color: #999999;
+  text-align: center;
+}
+
+/* Visual refresh */
+.page-container {
+  background: #f7f4ef;
+}
+
+.order-card {
+  border: 1rpx solid #f0e8e1;
+  border-radius: 22rpx;
+  box-shadow: 0 10rpx 28rpx rgba(74, 55, 40, 0.08);
+}
+
+.order-header {
+  padding: 24rpx;
+  margin: -4rpx -2rpx 24rpx;
+  border-radius: 18rpx;
+  background: linear-gradient(135deg, #fff2e8, #fffaf6);
+}
+
+.table-no {
+  color: #e95323;
+  font-size: 58rpx;
+}
+
+.status {
+  border: 1rpx solid #ffd7c3;
+  color: #d95527;
+  background: #ffffff;
+}
+
+.section-title {
+  color: #2d2926;
+}
+
+.item-options {
+  display: inline-block;
+  padding: 5rpx 12rpx;
+  border-radius: 12rpx;
+  color: #8a5a38;
+  background: #fff2e8;
+}
+
+.summary-card {
+  border: 1rpx solid #f1e8e0;
+  background: #faf8f5;
+}
+
+.cancel-card {
+  border-left: 7rpx solid #d93025;
+}
+
+.order-list-button {
+  box-shadow: 0 8rpx 20rpx rgba(255, 107, 53, 0.22);
+}
+
+.error-state {
+  color: #a84838;
+}
+
+.retry-button {
+  width: 190rpx;
+  height: 66rpx;
+  margin-top: 24rpx;
+  border-radius: 33rpx;
+  color: #ffffff;
+  font-size: 25rpx;
+  line-height: 66rpx;
+  background: #ff6b35;
+}
+
+.inline-error {
+  padding: 14rpx 18rpx;
+  margin-bottom: 18rpx;
+  border-radius: 14rpx;
+  color: #a84838;
+  font-size: 23rpx;
+  background: #fff1ee;
+}

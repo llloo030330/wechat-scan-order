@@ -1,0 +1,61 @@
+<view class="page-container">
+  <view wx:if="{{loadError && orders.length > 0}}" class="inline-error">
+    <text>{{loadError}}</text>
+    <button class="inline-retry-button" bindtap="retryLoadOrders">重试</button>
+  </view>
+
+  <view wx:if="{{loading && orders.length === 0}}" class="empty">当前共享桌单加载中...</view>
+
+  <view wx:elif="{{loadError && orders.length === 0}}" class="empty error-state">
+    <view>{{loadError}}</view>
+    <button class="retry-button" bindtap="retryLoadOrders">重新加载</button>
+  </view>
+
+  <view wx:elif="{{orders.length > 0}}">
+    <view
+      wx:for="{{orders}}"
+      wx:key="orderId"
+      class="order-card"
+      data-id="{{item.orderId}}"
+      bindtap="goToOrderDetail"
+    >
+      <view class="order-top">
+        <view>
+          <view class="table-label">桌号</view>
+          <view class="table-no">{{item.tableNo}}</view>
+        </view>
+        <text class="status status--{{item.statusClass}}">{{item.status}}</text>
+      </view>
+
+      <view class="info-row">
+        <text>菜品数量：{{item.itemCount}}</text>
+        <text class="total-price">¥{{item.totalPrice}}</text>
+      </view>
+      <view class="info-row">
+        <text>下单时间：{{item.createdAt}}</text>
+      </view>
+      <view wx:if="{{item.updatedAt}}" class="info-row">
+        <text>最后更新：{{item.updatedAt}}</text>
+      </view>
+      <view class="shared-items">
+        <view wx:for="{{item.items}}" wx:for-item="dish" wx:key="index" class="shared-item">
+          <view class="shared-item-main">
+            <text class="shared-item-name">{{dish.name}} × {{dish.quantity || dish.count}}</text>
+            <text wx:if="{{dish.selectedOptionsText}}" class="shared-item-options">{{dish.selectedOptionsText}}</text>
+            <text wx:if="{{dish.itemRemark}}" class="shared-item-remark">备注：{{dish.itemRemark}}</text>
+          </view>
+          <text class="shared-item-subtotal">¥{{dish.subtotal}}</text>
+        </view>
+      </view>
+      <view wx:if="{{item.cancelReason}}" class="cancel-reason">
+        取消原因：{{item.cancelReasonShort}}
+      </view>
+      <view class="order-id">订单编号：{{item.orderId}}</view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <view>当前还没有点菜</view>
+    <view class="empty-tip">同桌顾客提交菜品后，这里会自动更新</view>
+  </view>
+</view>

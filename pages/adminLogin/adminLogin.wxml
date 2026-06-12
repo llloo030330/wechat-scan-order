@@ -1,0 +1,14 @@
+<view class="page-container">
+  <view class="login-card">
+    <view class="title">商家身份验证</view>
+    <view class="tip">{{checkMessage}}</view>
+    <button
+      class="verify-button"
+      loading="{{checkingAdmin}}"
+      disabled="{{checkingAdmin}}"
+      bindtap="checkOpenIdAdmin"
+    >
+      重新检测管理员身份
+    </button>
+  </view>
+</view>

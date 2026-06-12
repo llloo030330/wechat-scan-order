@@ -1,0 +1,74 @@
+<view class="page-container">
+  <view class="page-header">
+    <view>
+      <view class="page-title">今日统计</view>
+      <view class="refresh-time">最后刷新：{{lastRefreshTime}}</view>
+    </view>
+    <button
+      class="refresh-button"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+      bindtap="refreshStats"
+    >
+      刷新统计
+    </button>
+  </view>
+  <view wx:if="{{loading}}" class="state-tip">统计加载中...</view>
+  <view wx:if="{{loadError}}" class="state-tip state-tip--error">{{loadError}}</view>
+
+  <view class="summary-grid">
+    <view class="summary-card">
+      <view class="summary-value">{{stats.totalOrders}}</view>
+      <view class="summary-label">今日总订单</view>
+    </view>
+    <view class="summary-card summary-card--valid">
+      <view class="summary-value">{{stats.validOrders}}</view>
+      <view class="summary-label">今日有效订单</view>
+    </view>
+    <view class="summary-card summary-card--amount">
+      <view class="summary-value">￥{{stats.totalAmount}}</view>
+      <view class="summary-label">今日营业额</view>
+    </view>
+    <view class="summary-card summary-card--canceled">
+      <view class="summary-value">{{stats.canceledOrders}}</view>
+      <view class="summary-label">今日取消订单</view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">订单状态</view>
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-value status-value--pending">{{stats.statusCounts.pending}}</view>
+        <view class="status-label">待接单</view>
+      </view>
+      <view class="status-item">
+        <view class="status-value status-value--preparing">{{stats.statusCounts.making}}</view>
+        <view class="status-label">制作中</view>
+      </view>
+      <view class="status-item">
+        <view class="status-value status-value--completed">{{stats.statusCounts.completed}}</view>
+        <view class="status-label">已完成</view>
+      </view>
+      <view class="status-item">
+        <view class="status-value status-value--canceled">{{stats.statusCounts.canceled}}</view>
+        <view class="status-label">已取消</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">热销菜品 Top 5</view>
+    <view wx:if="{{stats.topDishes.length === 0}}" class="empty">
+      今日暂无有效订单菜品
+    </view>
+    <view wx:for="{{stats.topDishes}}" wx:key="name" class="dish-row">
+      <view class="dish-rank">{{index + 1}}</view>
+      <view class="dish-info">
+        <view class="dish-name">{{item.name}}</view>
+        <view class="dish-amount">销售金额 ￥{{item.amount}}</view>
+      </view>
+      <view class="dish-quantity">售出 {{item.quantity}} 份</view>
+    </view>
+  </view>
+</view>

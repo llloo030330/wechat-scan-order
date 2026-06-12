@@ -1,0 +1,137 @@
+<view class="page-container">
+  <view class="stats-grid">
+    <view class="stat-card stat-card--pending">
+      <view class="stat-value">{{pendingCount}}</view>
+      <view class="stat-label">待接单</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-value">{{preparingCount}}</view>
+      <view class="stat-label">制作中</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-value">{{todayCount}}</view>
+      <view class="stat-label">今日订单</view>
+    </view>
+  </view>
+  <view wx:if="{{pendingCount > 0}}" class="pending-tip">
+    有 {{pendingCount}} 个订单待接单
+  </view>
+
+  <view class="refresh-bar">
+    <view class="refresh-time">最后刷新：{{lastRefreshTime}}</view>
+    <button
+      class="refresh-button"
+      loading="{{refreshing}}"
+      disabled="{{refreshing}}"
+      bindtap="manualRefresh"
+    >
+      手动刷新
+    </button>
+  </view>
+  <view wx:if="{{loadError}}" class="load-error-tip">{{loadError}}</view>
+
+  <scroll-view class="filter-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="filter-bar">
+      <view
+        wx:for="{{filterOptions}}"
+        wx:key="status"
+        class="filter-item {{activeStatus === item.status ? 'filter-item--active' : ''}}"
+        data-status="{{item.status}}"
+        bindtap="selectStatusFilter"
+      >
+        {{item.status}}({{item.count}})
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="quick-tools">
+    <view class="quick-tools-title">快捷管理</view>
+    <view class="quick-tools-grid">
+      <button class="dish-manage-button" bindtap="goToAdminDishes">菜品管理</button>
+      <button class="category-manage-button" bindtap="goToAdminCategories">分类管理</button>
+      <button class="table-manage-button" bindtap="goToAdminTables">餐桌管理</button>
+      <button class="settings-manage-button" bindtap="goToAdminSettings">店铺设置</button>
+    </view>
+    <button class="logout-button" bindtap="logoutAdmin">退出商家模式</button>
+  </view>
+
+  <view wx:if="{{refreshing && orders.length === 0}}" class="empty">订单加载中...</view>
+  <view wx:elif="{{orders.length > 0}}">
+    <view
+      wx:for="{{orders}}"
+      wx:key="orderId"
+      class="order-card {{item.isNewOrder ? 'order-card--new' : ''}}"
+      data-id="{{item.orderId}}"
+      bindtap="toggleOrder"
+    >
+      <view wx:if="{{item.isNewOrder}}" class="new-order-badge">新订单</view>
+      <view class="order-top">
+        <view>
+          <view class="table-label">桌号</view>
+          <view class="table-no">{{item.tableNo}}</view>
+        </view>
+        <text class="status status--{{item.statusClass}}">{{item.status}}</text>
+      </view>
+
+      <view class="info-row">
+        <text>菜品数量：{{item.itemCount}}</text>
+        <text class="total-price">¥{{item.totalPrice}}</text>
+      </view>
+
+      <view class="info-row">
+        <text>下单时间：{{item.createdAt}}</text>
+      </view>
+      <view wx:if="{{item.cancelReason}}" class="cancel-summary">
+        取消原因：{{item.cancelReason}}
+      </view>
+      <view class="order-id">订单编号：{{item.orderId}}</view>
+      <view wx:if="{{item.sessionId}}" class="order-id">用餐会话：{{item.sessionId}}</view>
+
+      <view wx:if="{{expandedOrderId === item.orderId}}" class="order-detail">
+        <view class="detail-title">菜品明细</view>
+        <view wx:for="{{item.items}}" wx:for-item="dish" wx:key="id" class="dish-row">
+          <view class="dish-name">
+            <view class="dish-title">{{dish.name}}</view>
+            <view wx:if="{{dish.selectedOptionsText}}" class="item-options">规格：{{dish.selectedOptionsText}}</view>
+            <view wx:if="{{dish.itemRemark}}" class="item-remark">备注：{{dish.itemRemark}}</view>
+            <view class="item-price">单价：¥{{dish.price}}</view>
+          </view>
+          <text class="dish-count">× {{dish.quantity || dish.count}}</text>
+          <text class="dish-subtotal">¥{{dish.subtotal}}</text>
+        </view>
+
+        <view class="remark-row">
+          <text class="remark-label">整单备注</text>
+          <text class="remark-text">{{item.remark || '无'}}</text>
+        </view>
+        <view wx:if="{{item.cancelReason}}" class="cancel-info">
+          <view>取消原因：{{item.cancelReason}}</view>
+          <view wx:if="{{item.canceledByText}}">取消方：{{item.canceledByText}}</view>
+          <view wx:if="{{item.canceledAt}}">取消时间：{{item.canceledAt}}</view>
+        </view>
+
+        <view class="detail-title">修改状态</view>
+        <view class="status-buttons">
+          <button
+            wx:for="{{statusOptions}}"
+            wx:for-item="status"
+            wx:key="*this"
+            class="status-button {{item.status === status ? 'status-button--active' : ''}}"
+            loading="{{updatingOrderId === item._id && item.status !== status}}"
+            disabled="{{updatingOrderId !== ''}}"
+            data-doc-id="{{item._id}}"
+            data-status="{{status}}"
+            catchtap="updateOrderStatus"
+          >
+            {{status}}
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <view>{{emptyMessage}}</view>
+    <view class="empty-tip">订单状态变化后列表会自动刷新</view>
+  </view>
+</view>

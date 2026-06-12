@@ -1,0 +1,171 @@
+<view class="menu-page">
+  <view class="store-header">
+    <view class="store-name">{{storeSettings.storeName}}</view>
+    <view wx:if="{{storeSettings.notice}}" class="store-notice">{{storeSettings.notice}}</view>
+  </view>
+  <view class="table-info">当前桌号：{{tableNo}}</view>
+  <view wx:if="{{sessionError}}" class="session-error">{{sessionError}}</view>
+
+  <view class="menu-content">
+    <scroll-view class="category-list" scroll-y>
+      <view
+        wx:for="{{categories}}"
+        wx:key="id"
+        class="category-item {{currentCategoryId === item.id ? 'category-item--active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="selectCategory"
+      >
+        {{item.name}}
+      </view>
+    </scroll-view>
+
+    <scroll-view class="dish-list" scroll-y>
+      <view wx:if="{{menuLoading && visibleDishes.length === 0}}" class="menu-state">
+        菜单加载中...
+      </view>
+      <view wx:elif="{{menuError && visibleDishes.length === 0}}" class="menu-state menu-state--error">
+        <view>{{menuError}}</view>
+        <button class="retry-button" bindtap="retryLoadMenu">重新加载</button>
+      </view>
+      <view wx:elif="{{!menuLoading && !menuError && visibleDishes.length === 0}}" class="menu-state">
+        暂无可点菜品
+      </view>
+      <view wx:if="{{menuError && visibleDishes.length > 0}}" class="menu-error-tip">
+        <text>{{menuError}}</text>
+        <button class="inline-retry-button" bindtap="retryLoadMenu">重试</button>
+      </view>
+      <view wx:for="{{visibleDishes}}" wx:key="id" class="dish-card {{item.status === 'soldOut' ? 'dish-card--sold-out' : ''}}">
+        <image
+          class="dish-image"
+          mode="aspectFill"
+          src="{{item.image || '/assets/images/dish-placeholder.svg'}}"
+          data-id="{{item.id}}"
+          binderror="onDishImageError"
+        />
+
+        <view class="dish-info">
+          <view class="dish-name">{{item.name}}</view>
+          <view class="dish-description">{{item.description}}</view>
+          <view wx:if="{{item.options && item.options.length > 0}}" class="dish-options-tip">可选口味/规格</view>
+
+          <view class="dish-bottom">
+            <text class="dish-price">¥{{item.price}}</text>
+
+            <view class="quantity-control">
+              <button
+                wx:if="{{item.count > 0}}"
+                class="quantity-button quantity-button--reduce"
+                data-id="{{item.id}}"
+                bindtap="reduceDish"
+              >
+                -
+              </button>
+              <text wx:if="{{item.count > 0}}" class="dish-count">{{item.count}}</text>
+              <text wx:if="{{item.status === 'soldOut'}}" class="sold-out-text">已售罄</text>
+              <button
+                wx:else
+                class="quantity-button quantity-button--add {{storeSettings.businessStatus === 'closed' ? 'quantity-button--closed' : ''}}"
+                data-id="{{item.id}}"
+                bindtap="addDish"
+              >
+                +
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="cart-bar">
+    <view class="cart-summary" bindtap="openCart">
+      <view class="cart-icon">
+        <text>购物车</text>
+        <text wx:if="{{cartCount > 0}}" class="cart-badge">{{cartCount}}</text>
+      </view>
+      <view class="cart-total">
+        <text class="cart-total-label">合计</text>
+        <text class="cart-total-price">¥{{cartTotal}}</text>
+      </view>
+    </view>
+
+    <button
+      class="checkout-button {{cartCount === 0 || storeSettings.businessStatus === 'closed' ? 'checkout-button--disabled' : ''}}"
+      disabled="{{cartCount === 0 || storeSettings.businessStatus === 'closed'}}"
+      bindtap="goToCheckout"
+    >
+      去结算
+    </button>
+  </view>
+
+  <view wx:if="{{specVisible}}" class="spec-mask" catchtap="closeSpecModal">
+    <view class="spec-panel" catchtap="stopPropagation">
+      <view class="spec-title">{{specDish.name}}</view>
+
+      <view wx:for="{{specGroups}}" wx:for-item="group" wx:for-index="groupIndex" wx:key="name" class="spec-group">
+        <view class="spec-group-name">{{group.name}}</view>
+        <view class="spec-values">
+          <button
+            wx:for="{{group.values}}"
+            wx:for-item="value"
+            wx:key="*this"
+            class="spec-value {{group.selectedValue === value ? 'spec-value--active' : ''}}"
+            data-group-index="{{groupIndex}}"
+            data-value="{{value}}"
+            bindtap="selectSpecValue"
+          >
+            {{value}}
+          </button>
+        </view>
+      </view>
+
+      <view class="remark-label">单品备注</view>
+      <textarea
+        class="item-remark-input"
+        maxlength="100"
+        placeholder="单品备注，例如：不要香菜"
+        value="{{itemRemark}}"
+        bindinput="onItemRemarkInput"
+      />
+
+      <view class="spec-actions">
+        <button class="spec-cancel" bindtap="closeSpecModal">取消</button>
+        <button class="spec-confirm" bindtap="confirmSpecSelection">确认加入</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{cartVisible}}" class="spec-mask" catchtap="closeCart">
+    <view class="cart-panel" catchtap="stopPropagation">
+      <view class="cart-panel-header">
+        <view class="spec-title cart-panel-title">购物车</view>
+        <button
+          wx:if="{{cartItems.length > 0}}"
+          class="clear-cart-button"
+          catchtap="clearCart"
+        >
+          清空
+        </button>
+      </view>
+
+      <view wx:for="{{cartItems}}" wx:key="id" class="cart-item">
+        <view class="cart-item-main">
+          <view class="cart-item-name">{{item.name}}</view>
+          <view wx:if="{{item.selectedOptions && item.selectedOptions.length > 0}}" class="cart-item-options">
+            <text wx:for="{{item.selectedOptions}}" wx:for-item="option" wx:key="name">
+              {{option.name}}：{{option.value}} 
+            </text>
+          </view>
+          <view wx:if="{{item.itemRemark}}" class="cart-item-remark">单品备注：{{item.itemRemark}}</view>
+          <view class="cart-item-price">¥{{item.subtotal}}</view>
+        </view>
+
+        <view class="cart-item-actions">
+          <button class="cart-item-button" data-id="{{item.id}}" bindtap="decreaseCartItem">-</button>
+          <text class="cart-item-count">{{item.quantity}}</text>
+          <button class="cart-item-button cart-item-button--add" data-id="{{item.id}}" bindtap="increaseCartItem">+</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

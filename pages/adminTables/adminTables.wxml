@@ -1,0 +1,90 @@
+<view class="page-container">
+  <view class="form-card">
+    <view class="form-title">{{editingId ? '编辑餐桌' : '新增餐桌'}}</view>
+
+    <input
+      class="form-input"
+      disabled="{{editingId}}"
+      placeholder="桌号，例如 A01"
+      value="{{form.tableNo}}"
+      data-field="tableNo"
+      bindinput="onFormInput"
+    />
+    <input
+      class="form-input"
+      placeholder="餐桌名称，例如 A01桌"
+      value="{{form.name}}"
+      data-field="name"
+      bindinput="onFormInput"
+    />
+
+    <button class="submit-button" loading="{{actionPending}}" disabled="{{loading || actionPending}}" bindtap="submitTable">
+      {{actionPending ? '保存中...' : editingId ? '保存修改' : '新增餐桌'}}
+    </button>
+    <button wx:if="{{editingId}}" class="cancel-button" bindtap="cancelEdit">取消编辑</button>
+  </view>
+
+  <view wx:if="{{loading && tables.length === 0}}" class="empty">餐桌加载中...</view>
+  <view wx:elif="{{tables.length === 0}}" class="empty">暂无餐桌，请新增</view>
+
+  <view wx:for="{{tables}}" wx:key="_id" class="table-card">
+    <view class="table-top">
+      <view>
+        <view class="table-no">{{item.tableNo}}</view>
+        <view class="table-name">{{item.name}}</view>
+      </view>
+      <view class="table-status {{item.status === 'enabled' ? 'table-status--enabled' : ''}}">
+        {{item.statusText}}
+      </view>
+    </view>
+    <view class="session-status">
+      {{item.activeSessionId ? '当前有进行中的用餐会话' : '当前桌台空闲'}}
+    </view>
+
+    <view class="button-row">
+      <button class="small-button" disabled="{{actionPending}}" data-doc-id="{{item._id}}" bindtap="editTable">编辑名称</button>
+      <button class="small-button" disabled="{{actionPending}}" data-doc-id="{{item._id}}" bindtap="toggleTableStatus">
+        {{item.status === 'enabled' ? '停用' : '启用'}}
+      </button>
+      <button class="small-button delete-button" disabled="{{actionPending}}" data-doc-id="{{item._id}}" bindtap="deleteTable">
+        删除
+      </button>
+    </view>
+
+    <button wx:if="{{enableTableSimulation}}" class="enter-menu-button" data-table-no="{{item.tableNo}}" bindtap="enterMenu">
+      模拟进入点餐
+    </button>
+
+    <button
+      class="clear-table-button"
+      disabled="{{actionPending || !item.activeSessionId}}"
+      data-table-no="{{item.tableNo}}"
+      data-session-id="{{item.activeSessionId}}"
+      bindtap="closeTableSession"
+    >
+      {{item.activeSessionId ? '完成并清台' : '桌台空闲'}}
+    </button>
+
+    <button
+      class="generate-code-button"
+      loading="{{generatingTableId === item._id}}"
+      disabled="{{generatingTableId !== '' || actionPending}}"
+      data-doc-id="{{item._id}}"
+      data-table-no="{{item.tableNo}}"
+      bindtap="generateTableCode"
+    >
+      {{item.codeFileID ? '重新生成点餐码' : '生成点餐码'}}
+    </button>
+
+    <view wx:if="{{item.codeTempURL}}" class="code-section">
+      <image
+        class="table-code"
+        mode="aspectFit"
+        src="{{item.codeTempURL}}"
+        data-url="{{item.codeTempURL}}"
+        bindtap="previewTableCode"
+      />
+      <view class="code-tip">点击图片预览</view>
+    </view>
+  </view>
+</view>

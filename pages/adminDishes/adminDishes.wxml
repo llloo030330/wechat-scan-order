@@ -1,0 +1,125 @@
+<view class="page-container">
+  <view wx:if="{{loadError && dishes.length > 0}}" class="inline-error">{{loadError}}</view>
+  <view class="form-card">
+    <view class="form-title">{{editingId ? '编辑菜品' : '新增菜品'}}</view>
+
+    <image
+      class="form-image-preview"
+      mode="aspectFill"
+      src="{{tempImagePath || form.image || '/assets/images/dish-placeholder.svg'}}"
+    />
+    <button class="choose-image-button" disabled="{{saving || uploading}}" bindtap="chooseDishImage">
+      {{uploading ? '图片上传中...' : editingId ? '更换图片' : '选择图片'}}
+    </button>
+
+    <input
+      class="form-input"
+      placeholder="菜品名称"
+      value="{{form.name}}"
+      data-field="name"
+      bindinput="onFormInput"
+    />
+    <input
+      class="form-input"
+      type="digit"
+      placeholder="价格"
+      value="{{form.price}}"
+      data-field="price"
+      bindinput="onFormInput"
+    />
+    <picker
+      disabled="{{categories.length === 0}}"
+      mode="selector"
+      range="{{categories}}"
+      range-key="name"
+      value="{{categoryIndex}}"
+      bindchange="onCategoryChange"
+    >
+      <view class="category-picker {{form.categoryId ? '' : 'category-picker--placeholder'}}">
+        {{form.categoryName || (categories.length > 0 ? '请选择分类' : '请先创建分类')}}
+      </view>
+    </picker>
+    <input
+      class="form-input"
+      type="number"
+      placeholder="菜品排序，数字越小越靠前"
+      value="{{form.sort}}"
+      data-field="sort"
+      bindinput="onFormInput"
+    />
+    <textarea
+      class="form-textarea"
+      placeholder="描述"
+      value="{{form.description}}"
+      data-field="description"
+      bindinput="onFormInput"
+    ></textarea>
+    <textarea
+      class="form-textarea options-textarea"
+      placeholder="规格配置，每行一组，例如：&#10;辣度:不辣,微辣,中辣,特辣&#10;份量:小份,大份"
+      value="{{form.optionsText}}"
+      bindinput="onOptionsTextInput"
+    ></textarea>
+
+    <button class="submit-button" loading="{{saving}}" disabled="{{saving || actionPending}}" bindtap="submitDish">
+      {{saving ? '保存中...' : editingId ? '保存修改' : '新增菜品'}}
+    </button>
+    <button wx:if="{{editingId}}" class="cancel-button" bindtap="cancelEdit">取消编辑</button>
+  </view>
+
+  <view wx:if="{{loading && dishes.length === 0}}" class="empty">菜品加载中...</view>
+  <view wx:elif="{{loadError && dishes.length === 0}}" class="empty error-state">{{loadError}}</view>
+  <view wx:elif="{{dishes.length === 0}}" class="empty">暂无菜品，请新增</view>
+
+  <view wx:for="{{dishes}}" wx:key="_id" class="dish-card dish-card--{{item.status}}">
+    <view class="dish-top">
+      <image
+        class="dish-thumbnail"
+        mode="aspectFill"
+        src="{{item.image || '/assets/images/dish-placeholder.svg'}}"
+      />
+      <view class="dish-summary">
+        <view class="dish-name">{{item.name}}</view>
+        <view class="dish-category">{{item.categoryName || item.category}}</view>
+        <view class="dish-category">排序：{{item.sort || 0}}</view>
+      </view>
+      <view class="dish-price">¥{{item.price}}</view>
+    </view>
+
+    <view class="dish-description">{{item.description}}</view>
+    <view wx:if="{{item.optionsSummary}}" class="dish-options">{{item.optionsSummary}}</view>
+    <view class="dish-status dish-status--{{item.status}}">当前状态：{{item.statusText}}</view>
+
+    <view class="button-row">
+      <button class="small-button" disabled="{{actionPending || saving}}" data-doc-id="{{item._id}}" bindtap="editDish">编辑</button>
+      <button
+        class="small-button {{item.status === 'available' ? 'small-button--active' : ''}}"
+        data-doc-id="{{item._id}}"
+        data-status="available"
+        disabled="{{actionPending || saving}}"
+        bindtap="setDishStatus"
+      >
+        上架
+      </button>
+      <button
+        class="small-button {{item.status === 'soldOut' ? 'small-button--active' : ''}}"
+        data-doc-id="{{item._id}}"
+        data-status="soldOut"
+        disabled="{{actionPending || saving}}"
+        bindtap="setDishStatus"
+      >
+        售罄
+      </button>
+      <button
+        class="small-button {{item.status === 'offShelf' ? 'small-button--active' : ''}}"
+        data-doc-id="{{item._id}}"
+        data-status="offShelf"
+        disabled="{{actionPending || saving}}"
+        bindtap="setDishStatus"
+      >
+        下架
+      </button>
+      <button class="small-button delete-button" disabled="{{actionPending || saving}}" data-doc-id="{{item._id}}" bindtap="deleteDish">删除</button>
+    </view>
+  </view>
+</view>

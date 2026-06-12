@@ -1,0 +1,46 @@
+<view class="page-container">
+  <view wx:if="{{businessStatus === 'closed'}}" class="section">
+    当前店铺休息中，暂不能提交订单
+  </view>
+  <view class="section table-section">
+    <text class="table-label">用餐桌号</text>
+    <text class="table-no">{{tableNo}}</text>
+  </view>
+
+  <view class="section">
+    <view class="section-title">已选菜品</view>
+
+    <view wx:if="{{selectedDishes.length === 0}}" class="cart-empty">
+      购物车为空，请返回点单
+    </view>
+    <view wx:for="{{selectedDishes}}" wx:key="id" class="dish-row">
+      <view class="dish-main">
+        <text class="dish-name">{{item.name}} × {{item.quantity}}</text>
+        <view wx:if="{{item.selectedOptionsText}}" class="item-options">规格：{{item.selectedOptionsText}}</view>
+        <text wx:if="{{item.itemRemark}}" class="item-remark">备注：{{item.itemRemark}}</text>
+        <text class="dish-price">单价：¥{{item.price}}</text>
+      </view>
+      <text class="dish-subtotal">¥{{item.subtotal}}</text>
+    </view>
+
+    <view class="total-row">
+      <text>总价</text>
+      <text class="total-price">¥{{totalPrice}}</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">订单备注</view>
+    <textarea
+      class="remark-input"
+      maxlength="100"
+      placeholder="例如：少辣、不放葱"
+      value="{{remark}}"
+      bindinput="onRemarkInput"
+    />
+  </view>
+
+  <button class="submit-button" loading="{{submitting}}" disabled="{{submitting || businessStatus === 'closed' || selectedDishes.length === 0}}" bindtap="submitOrder">
+    {{submitting ? '提交中...' : businessStatus === 'closed' ? '休息中，暂不能下单' : '提交订单'}}
+  </button>
+</view>

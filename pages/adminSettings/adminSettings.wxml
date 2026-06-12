@@ -1,0 +1,47 @@
+<view class="page-container">
+  <view wx:if="{{loading}}" class="state-tip">店铺设置加载中...</view>
+  <view wx:if="{{loadError}}" class="state-tip state-tip--error">{{loadError}}</view>
+  <view class="form-card">
+    <view class="form-title">店铺设置</view>
+
+    <view class="field-label">店铺名称</view>
+    <input
+      class="form-input"
+      maxlength="50"
+      value="{{form.storeName}}"
+      data-field="storeName"
+      bindinput="onInput"
+    />
+
+    <view class="field-label">店铺公告</view>
+    <textarea
+      class="form-textarea"
+      maxlength="200"
+      value="{{form.notice}}"
+      data-field="notice"
+      bindinput="onInput"
+    />
+
+    <view class="field-label">营业状态</view>
+    <view class="status-row">
+      <button
+        class="status-button {{form.businessStatus === 'open' ? 'status-button--active' : ''}}"
+        data-status="open"
+        bindtap="changeBusinessStatus"
+      >
+        营业中
+      </button>
+      <button
+        class="status-button {{form.businessStatus === 'closed' ? 'status-button--closed' : ''}}"
+        data-status="closed"
+        bindtap="changeBusinessStatus"
+      >
+        休息中
+      </button>
+    </view>
+
+    <button class="save-button" loading="{{saving}}" disabled="{{loading || saving}}" bindtap="saveStoreSettings">
+      {{saving ? '保存中...' : '保存设置'}}
+    </button>
+  </view>
+</view>

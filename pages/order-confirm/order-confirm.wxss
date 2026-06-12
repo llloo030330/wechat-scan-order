@@ -1,0 +1,176 @@
+.page-container {
+  min-height: 100vh;
+  padding: 24rpx 24rpx 150rpx;
+  background: #f5f5f5;
+}
+
+.section {
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+}
+
+.table-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-label {
+  color: #777777;
+  font-size: 27rpx;
+}
+
+.section-title {
+  color: #222222;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.table-no {
+  color: #ff6b35;
+  font-size: 46rpx;
+  font-weight: bold;
+}
+
+.dish-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #eeeeee;
+}
+
+.dish-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.dish-name {
+  color: #333333;
+  font-size: 28rpx;
+}
+
+.dish-price {
+  margin-top: 10rpx;
+  color: #999999;
+  font-size: 24rpx;
+}
+
+.item-options,
+.item-remark {
+  margin-top: 8rpx;
+  color: #777777;
+  font-size: 23rpx;
+  line-height: 32rpx;
+}
+
+.item-remark {
+  color: #ff6b35;
+}
+
+.dish-subtotal {
+  color: #333333;
+  font-weight: bold;
+}
+
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 28rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.total-price {
+  margin-left: 20rpx;
+  color: #ff4d2e;
+  font-size: 38rpx;
+  font-weight: bold;
+}
+
+.remark-input {
+  width: 100%;
+  height: 180rpx;
+  padding: 20rpx;
+  margin-top: 24rpx;
+  border-radius: 12rpx;
+  background: #f7f7f7;
+  font-size: 26rpx;
+}
+
+.submit-button {
+  position: fixed;
+  right: 24rpx;
+  bottom: 30rpx;
+  left: 24rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: bold;
+  line-height: 90rpx;
+  background: #ff6b35;
+}
+
+/* Visual refresh */
+.page-container {
+  background: #f7f4ef;
+}
+
+.section {
+  border: 1rpx solid #f0e8e1;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(74, 55, 40, 0.06);
+}
+
+.section:first-child {
+  color: #9b3b2e;
+  background: #fff1ee;
+}
+
+.table-section {
+  border-left: 8rpx solid #ff6b35;
+  background: linear-gradient(135deg, #fff9f3, #ffffff);
+}
+
+.table-no {
+  color: #e95323;
+  font-size: 54rpx;
+}
+
+.dish-name {
+  font-weight: bold;
+}
+
+.item-options {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 5rpx 12rpx;
+  border-radius: 12rpx;
+  color: #8a5a38;
+  background: #fff2e8;
+}
+
+.total-row {
+  margin-top: 8rpx;
+  border-top: 2rpx solid #f2e7de;
+}
+
+.remark-input {
+  border: 1rpx solid #eee4dc;
+  background: #faf8f5;
+}
+
+.submit-button {
+  box-shadow: 0 12rpx 28rpx rgba(255, 107, 53, 0.28);
+}
+
+.cart-empty {
+  padding: 70rpx 20rpx;
+  color: #999088;
+  text-align: center;
+}

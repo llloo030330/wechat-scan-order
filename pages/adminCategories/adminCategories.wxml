@@ -1,0 +1,51 @@
+<view class="page-container">
+  <view class="form-card">
+    <view class="form-title">{{editingId ? '编辑分类' : '新增分类'}}</view>
+
+    <input
+      class="form-input"
+      placeholder="分类名称，例如 热菜"
+      value="{{form.name}}"
+      data-field="name"
+      bindinput="onFormInput"
+    />
+    <input
+      class="form-input"
+      type="number"
+      placeholder="排序数字，越小越靠前"
+      value="{{form.sort}}"
+      data-field="sort"
+      bindinput="onFormInput"
+    />
+
+    <button class="submit-button" loading="{{actionPending}}" disabled="{{loading || actionPending}}" bindtap="submitCategory">
+      {{actionPending ? '保存中...' : editingId ? '保存修改' : '新增分类'}}
+    </button>
+    <button wx:if="{{editingId}}" class="cancel-button" bindtap="cancelEdit">取消编辑</button>
+  </view>
+
+  <view wx:if="{{loading && categories.length === 0}}" class="empty">分类加载中...</view>
+  <view wx:elif="{{categories.length === 0}}" class="empty">暂无分类，请新增</view>
+
+  <view wx:for="{{categories}}" wx:key="_id" class="category-card">
+    <view class="category-top">
+      <view>
+        <view class="category-name">{{item.name}}</view>
+        <view class="category-sort">排序：{{item.sort}}</view>
+      </view>
+      <view class="category-status {{item.status === 'enabled' ? 'category-status--enabled' : ''}}">
+        {{item.statusText}}
+      </view>
+    </view>
+
+    <view class="button-row">
+      <button class="small-button" disabled="{{actionPending}}" data-doc-id="{{item._id}}" bindtap="editCategory">编辑</button>
+      <button class="small-button" disabled="{{actionPending}}" data-doc-id="{{item._id}}" bindtap="toggleCategoryStatus">
+        {{item.status === 'enabled' ? '停用' : '启用'}}
+      </button>
+      <button class="small-button delete-button" disabled="{{actionPending}}" data-doc-id="{{item._id}}" bindtap="deleteCategory">
+        删除
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,47 @@
+<view class="page-container">
+  <view wx:if="{{loadError && orders.length > 0}}" class="inline-error">
+    <text>{{loadError}}</text>
+    <button class="inline-retry-button" bindtap="retryLoadOrders">重试</button>
+  </view>
+
+  <view wx:if="{{loading && orders.length === 0}}" class="empty">历史订单加载中...</view>
+
+  <view wx:elif="{{loadError && orders.length === 0}}" class="empty error-state">
+    <view>{{loadError}}</view>
+    <button class="retry-button" bindtap="retryLoadOrders">重新加载</button>
+  </view>
+
+  <view wx:elif="{{orders.length > 0}}">
+    <view
+      wx:for="{{orders}}"
+      wx:key="orderId"
+      class="order-card"
+      data-id="{{item.orderId}}"
+      bindtap="goToOrderDetail"
+    >
+      <view class="order-top">
+        <view>
+          <view class="table-label">桌号</view>
+          <view class="table-no">{{item.tableNo}}</view>
+        </view>
+        <text class="status status--{{item.status}}">{{item.status}}</text>
+      </view>
+      <view class="info-row">
+        <text>菜品数量：{{item.itemCount}}</text>
+        <text class="total-price">¥{{item.totalPrice}}</text>
+      </view>
+      <view class="info-row">
+        <text>下单时间：{{item.createdAt}}</text>
+      </view>
+      <view wx:if="{{item.cancelReason}}" class="cancel-reason">
+        取消原因：{{item.cancelReasonShort}}
+      </view>
+      <view class="order-id">订单编号：{{item.orderId}}</view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <view>暂无历史订单</view>
+    <view class="empty-tip">你参与过的用餐会话桌单会显示在这里</view>
+  </view>
+</view>

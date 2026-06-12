@@ -1,0 +1,69 @@
+<view class="page-container">
+  <view wx:if="{{loadError && order}}" class="inline-error">{{loadError}}</view>
+  <view wx:if="{{loading && !order}}" class="empty">共享桌单加载中...</view>
+  <view wx:elif="{{loadError && !order}}" class="empty error-state">
+    <view>{{loadError}}</view>
+    <button class="retry-button" bindtap="refreshOrder">重新加载</button>
+  </view>
+
+  <view wx:elif="{{order}}" class="order-card">
+    <view class="order-header">
+      <view>
+        <view class="table-label">用餐桌号</view>
+        <view class="table-no">{{order.tableNo}}</view>
+      </view>
+      <view class="status status--{{order.statusClass}}">{{order.status}}</view>
+    </view>
+    <view class="meta-row">订单编号：{{order.orderId}}</view>
+    <view class="meta-row">下单时间：{{order.createdAt}}</view>
+    <view wx:if="{{order.updatedAt}}" class="meta-row">最后更新：{{order.updatedAt}}</view>
+
+    <view class="section-title">共享菜品明细</view>
+    <view wx:for="{{order.items}}" wx:key="index" class="dish-row">
+      <view class="dish-main">
+        <view class="dish-title-row">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="dish-count">× {{item.quantity || item.count}}</text>
+        </view>
+        <view wx:if="{{item.selectedOptionsText}}" class="item-options">
+          规格：{{item.selectedOptionsText}}
+        </view>
+        <view wx:if="{{item.itemRemark}}" class="item-remark">备注：{{item.itemRemark}}</view>
+        <view class="dish-price">单价：¥{{item.price}}</view>
+      </view>
+      <text class="dish-subtotal">¥{{item.subtotal}}</text>
+    </view>
+
+    <view class="summary-card">
+      <view class="info-row">
+        <text class="label">整单备注</text>
+        <text class="remark">{{order.remark || '无'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">桌单总价</text>
+        <text class="total-price">¥{{order.totalPrice}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{order.status === '已取消'}}" class="cancel-card">
+      <view class="cancel-title">取消信息</view>
+      <view>取消原因：{{order.cancelReason || '无'}}</view>
+      <view wx:if="{{order.canceledByText}}">取消方：{{order.canceledByText}}</view>
+      <view wx:if="{{order.canceledAt}}">取消时间：{{order.canceledAt}}</view>
+    </view>
+
+    <button
+      wx:if="{{order.canAddDish && order.status === '待接单'}}"
+      class="cancel-order-button"
+      loading="{{canceling}}"
+      disabled="{{canceling}}"
+      bindtap="cancelOrder"
+    >
+      取消整张桌单
+    </button>
+    <button wx:if="{{order.canAddDish}}" class="order-list-button" bindtap="addDishes">继续加菜</button>
+    <button class="order-list-button secondary-button" bindtap="goToOrderList">查看当前桌单</button>
+  </view>
+
+  <view wx:else class="empty">订单不存在或已删除</view>
+</view>

@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/menu/menu",
+    "pages/order-confirm/order-confirm",
+    "pages/order-detail/order-detail",
+    "pages/orderList/orderList",
+    "pages/orderHistory/orderHistory",
+    "pages/profile/profile",
+    "pages/adminLogin/adminLogin",
+    "pages/adminHome/adminHome",
+    "pages/adminOrders/adminOrders",
+    "pages/adminStats/adminStats",
+    "pages/adminDishes/adminDishes",
+    "pages/adminCategories/adminCategories",
+    "pages/adminTables/adminTables",
+    "pages/adminSettings/adminSettings"
+  ],
+  "window": {
+    "navigationBarTitleText": "扫码点餐",
+    "navigationBarBackgroundColor": "#fffaf6",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f4ef"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#ff6b35",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/menu/menu",
+        "text": "点单"
+      },
+      {
+        "pagePath": "pages/orderList/orderList",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}
